@@ -61,6 +61,22 @@ namespace GuniApp_Proj_1.Web.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+
+            
+
+            [Display(Name = "Date Of Birth")]
+            [Required]
+            public DateTime DateofBirth { get; set; }
+
+            [Display(Name = "Name")]
+            [Required]
+            [StringLength(60, ErrorMessage = "{0} cannot have more than {1} characters")]
+            public string Displayname { get; set; }
+
+            [Display(Name = "Admin user")]
+            [Required]
+            public bool isAdminuser { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -75,7 +91,15 @@ namespace GuniApp_Proj_1.Web.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new MyIdentityUser { UserName = Input.Email, Email = Input.Email };
+                //added other fields like displayname, dateofbirth...
+                var user = new MyIdentityUser { 
+                 UserName = Input.Email
+                ,Email = Input.Email 
+                ,DisplayName = Input.Displayname
+                ,DateOfBirth = Input.DateofBirth
+                ,isAdminUser = Input.isAdminuser
+                };
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

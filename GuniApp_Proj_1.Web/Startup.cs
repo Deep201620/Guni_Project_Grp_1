@@ -13,6 +13,8 @@ using GuniApp_Proj_1.Web.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using GuniApp_Proj_1.Web.Services;
 
 namespace GuniApp_Proj_1.Web
 {
@@ -42,7 +44,7 @@ namespace GuniApp_Proj_1.Web
                 .AddIdentity<MyIdentityUser, MyIdentityRole>(options =>
                 {
                     //Sign-in policy
-                    options.SignIn.RequireConfirmedAccount = true;
+                    options.SignIn.RequireConfirmedAccount = false;
 
                     //Password Policy
                     options.Password.RequireUppercase = true;
@@ -73,6 +75,11 @@ namespace GuniApp_Proj_1.Web
                 });
 
             services.AddRazorPages();
+
+            //Registering customize email service - Conifgurations in appsettings.json
+            services
+                // only one object should be made for all the users
+                .AddSingleton<IEmailSender, MyEmailSender>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
