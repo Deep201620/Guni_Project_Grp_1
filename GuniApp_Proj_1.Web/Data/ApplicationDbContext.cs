@@ -9,6 +9,8 @@ namespace GuniApp_Proj_1.Web.Data
 {
     public class ApplicationDbContext : IdentityDbContext<MyIdentityUser, MyIdentityRole, Guid>
     {
+
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
